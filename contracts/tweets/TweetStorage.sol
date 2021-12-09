@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.10;
 
-contract TweetStorage {
+import "../helpers/BaseStorage.sol";
+
+contract TweetStorage is BaseStorage {
   mapping(uint => Tweet) public tweets;
 
   struct Tweet {
@@ -13,7 +15,11 @@ contract TweetStorage {
 
   uint lastestTweetId = 0;
 
-  function createTweet(uint _userId, string memory _text) public returns(uint) {
+  function createTweet(uint _userId, string memory _text)
+    public
+    onlyController
+    returns (uint)
+  {
     lastestTweetId++;
     tweets[lastestTweetId] = Tweet({
       id: lastestTweetId,
